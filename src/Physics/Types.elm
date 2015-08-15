@@ -37,7 +37,10 @@ velocity : Focus Body Transform
 velocity = create .velocity <|
   \f t -> { t | velocity <- f (.velocity t) }
 
-rmod x = let w = turns 1
-  in if | x > w  -> x - w
-        | x <= 0 -> x + w
-        | otherwise -> x
+fmod a b = let
+  c = if b < 0
+      then toFloat <| ceiling (a / b)
+      else toFloat <| floor   (a / b)
+  in a - b * c
+
+rmod = flip fmod (turns 1)

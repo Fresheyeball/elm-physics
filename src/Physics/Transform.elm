@@ -4,15 +4,13 @@ import Physics.Types exposing (..)
 import Focus exposing (create, get, Focus, update)
 
 empty : Transform
-empty = Transform 0.0 0.0 (turns 1)
+empty = Transform 0 0 (turns 0)
 
 append : Transform -> Transform -> Transform
-append t t' = let
-  addOn f = get f t + get f t'
-
-  in { x = addOn x
-     , y = addOn y
-     , r = addOn r |> rmod }
+append t t' = Transform
+  (t.x + t'.x)
+  (t.y + t'.y)
+  (rmod (t.r + t'.r))
 
 concat : List Transform -> Transform
 concat = List.foldr append empty
