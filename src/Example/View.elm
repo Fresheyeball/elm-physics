@@ -6,6 +6,7 @@ import Debug.Grid as Grid
 import Time exposing (Time)
 import Color
 import Physics.Types exposing (..)
+import Example.Types exposing (..)
 import Example.View.Config as Conf
 import Example.View.Ball as Ball
 
@@ -15,5 +16,5 @@ gridWith (w, h) =
   >> collage w h
   >> color Color.black
 
-view : (Int, Int) -> Body -> Element
-view (w, h) b = gridWith (w, h) [ Ball.render b ]
+view : (Int, Int) -> State -> Element
+view (w, h) (State _ b) = gridWith (w, h) [ Ball.render b ]
