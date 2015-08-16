@@ -13,10 +13,10 @@ rotate delta = Focus.update position <| T.rotate delta
 
 empty = Body T.empty T.empty T.empty 0
 
-update : Body -> Body
-update b = let
+step : Time -> Body -> Body
+step delta b = let
   (++) = T.append
-  v = b.velocity ++ b.acceleration
+  v = b.velocity ++ T.trimap ((*) <| inSeconds delta) b.acceleration
   p = b.position ++ v
   in { b | velocity     <- v
          , position     <- p

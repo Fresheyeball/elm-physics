@@ -6,11 +6,20 @@ import Focus exposing (create, get, Focus, update)
 empty : Transform
 empty = Transform 0 0 (turns 0)
 
-append : Transform -> Transform -> Transform
-append t t' = Transform
-  (t.x + t'.x)
-  (t.y + t'.y)
-  (rmod (t.r + t'.r))
+trimap : (Float -> Float) -> Transform -> Transform
+trimap f {x,y,r} =
+  { x = f x
+  , y = f y
+  , r = rmod (f r) }
+
+combineWith : (Float -> Float -> Float)
+  -> Transform -> Transform -> Transform
+combineWith o t t' = Transform
+  (t.x `o` t'.x)
+  (t.y `o` t'.y)
+  (rmod (t.r `o` t'.r))
+
+append = combineWith (+)
 
 concat : List Transform -> Transform
 concat = List.foldr append empty
