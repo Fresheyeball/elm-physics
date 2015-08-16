@@ -3,6 +3,7 @@ module Physics.Types where
 import Focus exposing (create, get, Focus, update)
 
 type alias Angle = Float
+type alias Mass  = Float
 
 type alias Transform =
   { x : Float
@@ -15,7 +16,9 @@ type alias Force =
 
 type alias Body =
   { position : Transform
-  , velocity : Transform }
+  , velocity : Transform
+  , acceleration : Transform
+  , mass : Mass }
 
 x : Focus { record | x : Float } Float
 x = create .x <|
@@ -36,6 +39,10 @@ position = create .position <|
 velocity : Focus Body Transform
 velocity = create .velocity <|
   \f t -> { t | velocity <- f (.velocity t) }
+
+acceleration : Focus Body Transform
+acceleration = create .acceleration <|
+  \f t -> { t | acceleration <- f (.acceleration t) }
 
 fmod a b = let
   c = if b < 0
