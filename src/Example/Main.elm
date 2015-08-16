@@ -2,7 +2,7 @@ module Example.Main where
 
 import Window exposing (dimensions)
 import Signal exposing (..)
-import Time exposing (fps, Time)
+import Time exposing (fps, Time, inSeconds)
 import Example.View exposing (view)
 import Example.Types exposing (..)
 
@@ -20,11 +20,11 @@ step t (State total b) =
   Body.step (D.watch "Delta" t) b
   |> give gravity
   |> D.watch "Body"
-  |> State (D.watch "Time" (total + t))
+  |> State (D.watch "Time" (total + inSeconds t))
 
 initial : State
 initial = State 0
-  { position     = Transform 1 3 0
+  { position     = Transform 0 4 0
   , velocity     = Transform.empty
   , acceleration = Transform.empty
   , mass         = 1 }

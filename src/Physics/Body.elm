@@ -18,8 +18,8 @@ step delta b = let
   trans ** float = T.trimap ((*) float) trans
   (++) = T.append
   delta' = inSeconds delta
-  v = b.velocity `T.append` (b.acceleration ** delta')
-  p = b.position ++ (v ** (delta' / 2))
+  v = b.velocity ++ (b.acceleration ** delta')
+  p = b.position ++ (v ** delta')
   in { b | velocity     <- v
          , position     <- p
          , acceleration <- T.empty }
