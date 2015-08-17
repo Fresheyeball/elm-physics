@@ -2,8 +2,9 @@ module Physics.Types where
 
 import Focus exposing (create, get, Focus, update)
 
-type alias Angle = Float
-type alias Mass  = Float
+type alias Angle       = Float
+type alias Mass        = Float
+type alias Restitution = Float
 
 type alias Transform =
   { x : Float
@@ -18,6 +19,7 @@ type alias Body =
   { position : Transform
   , velocity : Transform
   , acceleration : Transform
+  , restitution : Restitution
   , mass : Mass }
 
 x : Focus { record | x : Float } Float

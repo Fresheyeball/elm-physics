@@ -1,3 +1,3 @@
 module Example.View.Config where
 
-scale = 1 / 100
+scale = 1 / 125
