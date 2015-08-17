@@ -5,6 +5,9 @@ import Physics.Types exposing (..)
 import Physics.Body as Body
 import Physics.Force exposing (div, append)
 import Physics.Transform as Transform
+import Physics.Collision as Collision
+
+import Debug
 
 density = 1.2754
 
@@ -15,7 +18,7 @@ give f b = let
             , y <- a.y + f'.y }
   in update acceleration g b
 
-deflect : (Body, Body) -> (Body, Body)
+deflect : (Body, Body) -> Body
 deflect (body, body') = let
   f : Focus Body Float -> Body -> Body -> Body
   f l a b = let
@@ -27,7 +30,31 @@ deflect (body, body') = let
         + a.mass  *  get l a
         / b.mass  +  a.mass
     in update l (always v) a
-  in (          f (velocity => x)  body  body'
-       |> flip (f (velocity => y))       body'
-     ,          f (velocity => x)  body' body
-       |> flip (f (velocity => y))       body )
+  in          f (velocity => x)  body  body'
+     |> flip (f (velocity => y))       body'
+
+
+collisions : List Body -> List Body
+collisions bs = let
+  (<$>)  = List.map
+  (>>=)  = flip List.concatMap
+
+  lift2 : (Body -> Body -> List Body)
+   -> List Body -> List Body -> List Body
+  lift2 f' bs' bs'' =
+    bs' >>= (\a -> bs'' >>= f' a)
+
+  isCollision b b' = let
+    positionBounds {bounds, position} =
+      (\(x, y) -> (x + position.x, y + position.y)) <$>  bounds
+    in Collision.collision 10
+    (Debug.watch "bounds"  <| positionBounds b,  Collision.polySupport)
+    (Debug.watch "bounds'" <| positionBounds b', Collision.polySupport)
+
+  f : Body -> Body -> List Body
+  f b b' =
+    if b /= b' && (Debug.watch "Is Collision?" <| b `isCollision` b')
+    then [deflect (b, b')]
+    else [b]
+
+  in lift2 f bs bs

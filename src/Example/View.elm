@@ -9,6 +9,7 @@ import Physics.Types exposing (..)
 import Example.Types exposing (..)
 import Example.View.Config as Conf
 import Example.View.Ball as Ball
+import Example.View.Box as Box
 
 gridWith : (Int, Int) -> List Form -> Element
 gridWith (w, h) =
@@ -17,4 +18,5 @@ gridWith (w, h) =
   >> color Color.black
 
 view : (Int, Int) -> State -> Element
-view (w, h) (State _ b) = gridWith (w, h) [ Ball.render b ]
+view (w, h) (State _ bs) =
+  gridWith (w, h) <| List.map (\x -> x.render x.body) bs

@@ -5,6 +5,10 @@ import Focus exposing (create, get, Focus, update)
 type alias Angle       = Float
 type alias Mass        = Float
 type alias Restitution = Float
+type alias Vector      = (Float, Float)
+type alias Polygon     = List Vector
+
+bimap f (a, b) = (f a, f b)
 
 type alias Transform =
   { x : Float
@@ -16,11 +20,12 @@ type alias Force =
   , y : Float }
 
 type alias Body =
-  { position : Transform
-  , velocity : Transform
+  { position     : Transform
+  , velocity     : Transform
   , acceleration : Transform
-  , restitution : Restitution
-  , mass : Mass }
+  , restitution  : Restitution
+  , bounds       : Polygon
+  , mass         : Mass }
 
 x : Focus { record | x : Float } Float
 x = create .x <|

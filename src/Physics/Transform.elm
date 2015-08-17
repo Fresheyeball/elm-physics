@@ -6,6 +6,9 @@ import Focus exposing (create, get, Focus, update)
 empty : Transform
 empty = Transform 0 0 (turns 0)
 
+toVector : Transform -> Vector
+toVector {x, y} = (x, y)
+
 trimap : (Float -> Float) -> Transform -> Transform
 trimap f {x,y,r} =
   { x = f x
