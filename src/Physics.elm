@@ -22,7 +22,7 @@ give f b = let
             , y <- a.y + f'.y }
   in update acceleration g b
 
-deflect : (Body, Body) -> Body
+deflect : (Body, Body) -> (Body, Body)
 deflect (body, body') = let
   f : Focus Body Float -> Body -> Body -> Body
   f l a b = let
@@ -34,8 +34,9 @@ deflect (body, body') = let
         + a.mass  *  get l a
         / b.mass  +  a.mass
     in update l (always v) a
-  in          f (velocity => x)  body  body'
-     |> flip (f (velocity => y))       body'
+  g bx by = f (velocity => x) bx by
+     |> flip (f (velocity => y)) by
+  in (g body body', g body' body)
 
 
 -- collisions : List Body -> List Body
