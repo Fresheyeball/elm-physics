@@ -13,12 +13,10 @@ import Physics.Transform as Transform
 
 import Debug as D
 
-gravity = Force 0 -9.89
-
 step : Time -> State -> State
 step t (State total b) =
   Body.step (D.watch "Delta" t) b
-  |> give gravity
+  |> gravity
   |> D.watch "Body"
   |> State (D.watch "Time" (total + inSeconds t))
 
@@ -27,6 +25,7 @@ initial = State 0
   { position     = Transform 0 4 0
   , velocity     = Transform.empty
   , acceleration = Transform.empty
+  , restitution  = 0.5
   , mass         = 1 }
 
 main =

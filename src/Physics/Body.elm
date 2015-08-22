@@ -15,7 +15,7 @@ empty = Body T.empty T.empty T.empty 0
 
 step : Time -> Body -> Body
 step delta b = let
-  trans ** float = T.trimap ((*) float) trans
+  trans ** float = T.map ((*) float) trans
   (++) = T.append
   delta' = inSeconds delta
   v = b.velocity ++ (b.acceleration ** delta')

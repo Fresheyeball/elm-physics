@@ -5,22 +5,23 @@ import Focus exposing (create, get, Focus, update)
 type alias Angle       = Float
 type alias Mass        = Float
 type alias Restitution = Float
+type alias Force       = Float
+
+type alias Vector2 =
+  { x : Float
+  , y : Float }
 
 type alias Transform =
   { x : Float
   , y : Float
   , r : Angle }
 
-type alias Force =
-  { x : Float
-  , y : Float }
-
 type alias Body =
-  { position : Transform
-  , velocity : Transform
+  { position     : Transform
+  , velocity     : Transform
   , acceleration : Transform
-  , restitution : Restitution
-  , mass : Mass }
+  , restitution  : Restitution
+  , mass         : Mass }
 
 x : Focus { record | x : Float } Float
 x = create .x <|
