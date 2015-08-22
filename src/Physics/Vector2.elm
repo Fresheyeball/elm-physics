@@ -17,3 +17,18 @@ div : Vector2 -> Float -> Vector2
 div f n = Vector2
   (f.x / n)
   (f.y / n)
+
+map : (Float -> Float) -> { record | x : Float, y : Float} -> Vector2
+map f v =
+  { x = f v.x
+  , y = f v.y }
+
+map2 : (Float -> Float -> Float) -> { record | x : Float, y : Float} -> { record | x : Float, y : Float} -> Vector2
+map2 f v v' =
+  { x = f v.x v'.x
+  , y = f v.y v'.y }
+
+magnitude : Vector2 -> Float
+magnitude v = let
+  v' = map abs v
+  in v'.x^2 + v'.y^2 |> sqrt

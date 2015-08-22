@@ -4,6 +4,7 @@ import Focus exposing (..)
 import Time exposing (Time, inSeconds)
 import Physics.Types exposing (..)
 import Physics.Transform as T
+import Physics.Vector2 as V
 
 move : Transform -> Body -> Body
 move delta = Focus.update position (T.move delta)
@@ -23,3 +24,7 @@ step delta b = let
   in { b | velocity     <- v
          , position     <- p
          , acceleration <- T.empty }
+
+momentum : Body -> Vector2
+momentum b =
+  (+) b.mass `V.map` b.velocity

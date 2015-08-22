@@ -9,6 +9,8 @@
     "exposed-modules": [],
     "dependencies": {
         "TheSeamau5/elm-check": "3.2.0 <= v < 4.0.0",
+        "TheSeamau5/elm-random-extra": "2.1.0 <= v < 3.0.0",
+        "TheSeamau5/elm-shrink": "3.0.1 <= v < 4.0.0",
         "elm-lang/core": "2.1.0 <= v < 3.0.0",
         "evancz/focus": "1.0.1 <= v < 2.0.0"
     },
